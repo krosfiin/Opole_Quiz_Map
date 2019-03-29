@@ -40,18 +40,22 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //My logic for Button goes in here
+                if(mQuestionNumber < 4) {
+                    if (mButtonChoice1.getText() == mAnswer){
+                        mScore = mScore + 1;
+                        updateScore(mScore);
+                        updateQuestion();
+                        //This line of code is optiona
+                        Toast.makeText(QuizActivity.this, "correct", Toast.LENGTH_SHORT).show();
 
-                if (mButtonChoice1.getText() == mAnswer){
-                    mScore = mScore + 1;
-                    updateScore(mScore);
-                    updateQuestion();
-                    //This line of code is optiona
-                    Toast.makeText(QuizActivity.this, "correct", Toast.LENGTH_SHORT).show();
-
-                }else {
-                    Toast.makeText(QuizActivity.this, "wrong", Toast.LENGTH_SHORT).show();
-                    updateQuestion();
+                    }else {
+                        Toast.makeText(QuizActivity.this, "wrong", Toast.LENGTH_SHORT).show();
+                        updateQuestion();
+                    }
+                }else{
+                    Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore , Toast.LENGTH_LONG).show();
                 }
+
             }
         });
 
@@ -62,18 +66,22 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //My logic for Button goes in here
+                if(mQuestionNumber < 4) {
+                    if (mButtonChoice2.getText() == mAnswer){
+                        mScore = mScore + 1;
+                        updateScore(mScore);
+                        updateQuestion();
+                        //This line of code is optiona
+                        Toast.makeText(QuizActivity.this, "correct", Toast.LENGTH_SHORT).show();
 
-                if (mButtonChoice2.getText() == mAnswer){
-                    mScore = mScore + 1;
-                    updateScore(mScore);
-                    updateQuestion();
-                    //This line of code is optiona
-                    Toast.makeText(QuizActivity.this, "correct", Toast.LENGTH_SHORT).show();
-
-                }else {
-                    Toast.makeText(QuizActivity.this, "wrong", Toast.LENGTH_SHORT).show();
-                    updateQuestion();
+                    }else {
+                        Toast.makeText(QuizActivity.this, "wrong", Toast.LENGTH_SHORT).show();
+                        updateQuestion();
+                    }
+                }else{
+                    Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore , Toast.LENGTH_LONG).show();
                 }
+
             }
         });
 
@@ -85,17 +93,20 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //My logic for Button goes in here
+                if(mQuestionNumber < 4) {
+                    if (mButtonChoice3.getText() == mAnswer) {
+                        mScore = mScore + 1;
+                        updateScore(mScore);
+                        updateQuestion();
+                        //This line of code is optiona
+                        Toast.makeText(QuizActivity.this, "correct", Toast.LENGTH_SHORT).show();
 
-                if (mButtonChoice3.getText() == mAnswer){
-                    mScore = mScore + 1;
-                    updateScore(mScore);
-                    updateQuestion();
-                    //This line of code is optiona
-                    Toast.makeText(QuizActivity.this, "correct", Toast.LENGTH_SHORT).show();
-
-                }else {
-                    Toast.makeText(QuizActivity.this, "wrong", Toast.LENGTH_SHORT).show();
-                    updateQuestion();
+                    } else {
+                        Toast.makeText(QuizActivity.this, "wrong", Toast.LENGTH_SHORT).show();
+                        updateQuestion();
+                    }
+                }else{
+                    Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore , Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -109,7 +120,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateQuestion(){
-        if(mQuestionNumber < 4){
             mQuestionView.setText(mQuestionsLibrary.getQuestion(mQuestionNumber));
             mButtonChoice1.setText(mQuestionsLibrary.getChoice1(mQuestionNumber));
             mButtonChoice2.setText(mQuestionsLibrary.getChoice2(mQuestionNumber));
@@ -117,9 +127,7 @@ public class QuizActivity extends AppCompatActivity {
 
             mAnswer = mQuestionsLibrary.getCorrectAnswer(mQuestionNumber);
             mQuestionNumber++;
-        } else {
-            Toast.makeText(this, "Twój wynik : " + mScore , Toast.LENGTH_LONG).show();
-        }
+
 
     }
 
