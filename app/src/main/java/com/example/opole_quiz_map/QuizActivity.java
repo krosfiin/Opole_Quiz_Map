@@ -17,6 +17,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mButtonChoice1;
     private Button mButtonChoice2;
     private Button mButtonChoice3;
+    private DBUserAdapter dbUserAdapter;
     UserData userData = UserData.getInstance();
     private String mAnswer;
     private int mScore = userData.getScore();
@@ -34,6 +35,7 @@ public class QuizActivity extends AppCompatActivity {
         mButtonChoice2 = (Button)findViewById(R.id.choice2);
         mButtonChoice3 = (Button)findViewById(R.id.choice3);
         updateQuestion();
+        dbUserAdapter = new DBUserAdapter(this);
         updateScore(mScore);
         //Start of Button Listener for Button1
         mButtonChoice1.setOnClickListener(new View.OnClickListener(){
@@ -54,6 +56,7 @@ public class QuizActivity extends AppCompatActivity {
                         updateQuestion();
                     }
                 }else{
+                    dbUserAdapter.updateScore(userData.email, mScore);
                     Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore , Toast.LENGTH_LONG).show();
                 }
 
@@ -81,6 +84,8 @@ public class QuizActivity extends AppCompatActivity {
                         updateQuestion();
                     }
                 }else{
+                    //Toast.makeText(QuizActivity.this, "Twój wynik : " + userData.email + " " + mScore , Toast.LENGTH_LONG).show();
+                    dbUserAdapter.updateScore(userData.email, mScore);
                     Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore , Toast.LENGTH_LONG).show();
                 }
 
@@ -111,6 +116,7 @@ public class QuizActivity extends AppCompatActivity {
                         updateQuestion();
                     }
                 }else{
+                    dbUserAdapter.updateScore(userData.email, mScore);
                     Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore , Toast.LENGTH_LONG).show();
                 }
                 mButtonChoice3.setBackgroundColor(Color.BLUE);

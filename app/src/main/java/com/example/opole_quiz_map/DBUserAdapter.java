@@ -72,11 +72,18 @@ public class DBUserAdapter
         DBHelper.close();
     }
 
+    public void updateScore(String name, Integer score){
+        SQLiteDatabase db = DBHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SCORE, score);
+        String[] whereArgs= {name};
+        int count = db.update(DATABASE_TABLE, values, KEY_USERNAME+" = ?",whereArgs );
+    }
+
     public UserData addUser(UserData user) {
 
     //get writable database
     SQLiteDatabase db = DBHelper.getWritableDatabase();
-
     //create content values to insert
     ContentValues values = new ContentValues();
 
