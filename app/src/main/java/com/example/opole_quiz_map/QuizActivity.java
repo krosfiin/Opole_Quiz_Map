@@ -1,5 +1,6 @@
 package com.example.opole_quiz_map;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -16,9 +17,9 @@ public class QuizActivity extends AppCompatActivity {
     private Button mButtonChoice1;
     private Button mButtonChoice2;
     private Button mButtonChoice3;
-
+    UserData userData = UserData.getInstance();
     private String mAnswer;
-    private int mScore = 0;
+    private int mScore = userData.getScore();
     private int mQuestionNumber = 0;
 
     @Override
@@ -32,9 +33,8 @@ public class QuizActivity extends AppCompatActivity {
         mButtonChoice1 = (Button)findViewById(R.id.choice1);
         mButtonChoice2 = (Button)findViewById(R.id.choice2);
         mButtonChoice3 = (Button)findViewById(R.id.choice3);
-
         updateQuestion();
-
+        updateScore(mScore);
         //Start of Button Listener for Button1
         mButtonChoice1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -43,9 +43,10 @@ public class QuizActivity extends AppCompatActivity {
                 if(mQuestionNumber < 4) {
                     if (mButtonChoice1.getText() == mAnswer){
                         mScore = mScore + 1;
+                        userData.setScore(mScore);
                         updateScore(mScore);
                         updateQuestion();
-                        //This line of code is optiona
+                        //This line of code is optional
                         Toast.makeText(QuizActivity.this, "correct", Toast.LENGTH_SHORT).show();
 
                     }else {
@@ -69,6 +70,7 @@ public class QuizActivity extends AppCompatActivity {
                 if(mQuestionNumber < 4) {
                     if (mButtonChoice2.getText() == mAnswer){
                         mScore = mScore + 1;
+                        userData.setScore(mScore);
                         updateScore(mScore);
                         updateQuestion();
                         //This line of code is optiona
@@ -97,17 +99,21 @@ public class QuizActivity extends AppCompatActivity {
                     if (mButtonChoice3.getText() == mAnswer) {
                         mScore = mScore + 1;
                         updateScore(mScore);
+                        userData.setScore(mScore);
                         updateQuestion();
-                        //This line of code is optiona
+                        //This line of code is optional
+                        mButtonChoice3.setBackgroundColor(Color.GREEN);
                         Toast.makeText(QuizActivity.this, "correct", Toast.LENGTH_SHORT).show();
 
                     } else {
+                        mButtonChoice3.setBackgroundColor(Color.RED);
                         Toast.makeText(QuizActivity.this, "wrong", Toast.LENGTH_SHORT).show();
                         updateQuestion();
                     }
                 }else{
                     Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore , Toast.LENGTH_LONG).show();
                 }
+                mButtonChoice3.setBackgroundColor(Color.BLUE);
             }
         });
 

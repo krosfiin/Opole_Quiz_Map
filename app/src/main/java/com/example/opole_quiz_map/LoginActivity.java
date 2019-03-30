@@ -29,7 +29,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.net.PasswordAuthentication;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,39 +57,133 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
-
     // UI references.
+
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private Button buttonSignIn;
+    private Button buttonLogIn;
     private View mProgressView;
     private View mLoginFormView;
-
+    private DBUserAdapter dbUserAdapter;
+    UserData userData = UserData.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
+        dbUserAdapter = new DBUserAdapter(this);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
                     return true;
                 }
                 return false;
             }
         });
-
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        buttonLogIn = (Button) findViewById(R.id.log_in_button);
+        buttonLogIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                mEmailView.setError(null);
+                mPasswordView.setError(null);
+
+                String email = mEmailView.getText().toString();
+                String password = mPasswordView.getText().toString();
+                boolean cancel = false;
+                View focusView = null;
+                if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+                    mPasswordView.setError(getString(R.string.error_invalid_password));
+                    focusView = mPasswordView;
+                    cancel = true;
+                }
+                if (TextUtils.isEmpty(email)) {
+                    mEmailView.setError(getString(R.string.error_field_required));
+                    focusView = mEmailView;
+                    cancel = true;
+                } else if (!isEmailValid(email)) {
+                    mEmailView.setError(getString(R.string.error_invalid_email));
+                    focusView = mEmailView;
+                    cancel = true;
+                }
+
+                if (cancel) {
+                    focusView.requestFocus();
+                } else {
+                    showProgress(true);
+                    UserData currentUser = dbUserAdapter.Authenticate(new UserData(null, email, password,0));
+                    if (currentUser != null) {
+                        userData.setUserData(currentUser);
+                        Snackbar.make(buttonLogIn, "Successfully Logged in!", Snackbar.LENGTH_LONG).show();
+                        Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivity(myIntent);
+                        finish();
+                    } else {
+                        showProgress(false);
+                        Snackbar.make(buttonLogIn, "Failed to log in , please try again", Snackbar.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+        buttonSignIn = (Button) findViewById(R.id.sign_in_button);
+        buttonSignIn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Reset errors.
+                mEmailView.setError(null);
+                mPasswordView.setError(null);
+
+                // Store values at the time of the login attempt.
+                String email = mEmailView.getText().toString();
+                String password = mPasswordView.getText().toString();
+
+                boolean cancel = false;
+                View focusView = null;
+
+                // Check for a valid password, if the user entered one.
+                if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+                    mPasswordView.setError(getString(R.string.error_invalid_password));
+                    focusView = mPasswordView;
+                    cancel = true;
+                }
+
+                // Check for a valid email address.
+                if (TextUtils.isEmpty(email)) {
+                    mEmailView.setError(getString(R.string.error_field_required));
+                    focusView = mEmailView;
+                    cancel = true;
+                } else if (!isEmailValid(email)) {
+                    mEmailView.setError(getString(R.string.error_invalid_email));
+                    focusView = mEmailView;
+                    cancel = true;
+                }
+
+                if (cancel) {
+                    focusView.requestFocus();
+                } else {
+                    showProgress(true);
+                    //Authenticate user
+                    UserData currentUser = dbUserAdapter.addUser(new UserData(null, email, password, 0));
+
+                    //Check Authentication is successful or not
+                    if (currentUser != null) {
+                        userData.setUserData(currentUser);
+                        Snackbar.make(buttonSignIn, "Successfully signed in!", Snackbar.LENGTH_LONG).show();
+                        Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivity(myIntent);
+                        finish();
+                    } else {
+                        showProgress(false);
+                        //User Logged in Failed
+                        Snackbar.make(buttonSignIn, "Failed to log in , please try again", Snackbar.LENGTH_LONG).show();
+
+                    }
+                }
             }
         });
 
@@ -135,59 +231,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 populateAutoComplete();
             }
-        }
-    }
-
-
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
-
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
         }
     }
 
@@ -295,59 +338,5 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-                Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(myIntent);
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
 }
 

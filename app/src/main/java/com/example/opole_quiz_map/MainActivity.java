@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private PermissionsManager permissionsManager;
     private MapboxMap mapboxMap;
     private MapView mapView;
+    UserData userData = UserData.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +53,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         MainActivity.this.getResources(), R.drawable.mapbox_marker_icon_default));
 
                         enableLocationComponent(style);
+
                     }
                 });
             }
         });
+        Toast.makeText(this, userData.email + " " + userData.score , Toast.LENGTH_LONG).show();
     }
 
     private static final String geoJsonLayerPoints = "opole-map-quiz";
@@ -101,13 +104,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             // Activate with options
             locationComponent.activateLocationComponent(this, loadedMapStyle);
 
-// Enable to make component visible
+            // Enable to make component visible
             locationComponent.setLocationComponentEnabled(true);
 
-// Set the component's camera mode
+            // Set the component's camera mode
             locationComponent.setCameraMode(CameraMode.TRACKING);
 
-// Set the component's render mode
+            // Set the component's render mode
             locationComponent.setRenderMode(RenderMode.COMPASS);
 
 
