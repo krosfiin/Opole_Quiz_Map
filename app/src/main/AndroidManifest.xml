@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.opole_quiz_map">
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -15,16 +14,16 @@
         android:roundIcon="@mipmap/opole_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QuizActivity"></activity>
-        <activity
-            android:name=".LoginActivity">
+        <activity android:name=".SignInActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".LoginActivity" android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

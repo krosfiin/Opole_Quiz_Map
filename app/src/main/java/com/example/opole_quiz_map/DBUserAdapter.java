@@ -12,7 +12,7 @@ import android.util.Log;
 public class DBUserAdapter
 {
     public static final String KEY_ROWID = "_id";
-    public static final String KEY_USERNAME= "username";
+    public static final String KEY_EMAIL= "email";
     public static final String KEY_PASSWORD = "password";
     private static final String TAG = "DBAdapter";
     private static final String SCORE = "score";
@@ -22,7 +22,7 @@ public class DBUserAdapter
 
     private static final String DATABASE_CREATE =
             "create table users (_id integer primary key autoincrement, "
-                    + "username text not null, "
+                    + "email text not null, "
                     + "password text not null," +
                     "score int DEFAULT 0);";
 
@@ -77,7 +77,7 @@ public class DBUserAdapter
         ContentValues values = new ContentValues();
         values.put(SCORE, score);
         String[] whereArgs= {name};
-        int count = db.update(DATABASE_TABLE, values, KEY_USERNAME+" = ?",whereArgs );
+        int count = db.update(DATABASE_TABLE, values, KEY_EMAIL+" = ?",whereArgs );
     }
 
     public UserData addUser(UserData user) {
@@ -88,7 +88,7 @@ public class DBUserAdapter
     ContentValues values = new ContentValues();
 
     //Put username in  @values
-    values.put(KEY_USERNAME, user.email);
+    values.put(KEY_EMAIL, user.email);
 
     //Put email in  @values
     values.put(SCORE, user.score);
@@ -104,8 +104,8 @@ public class DBUserAdapter
     public UserData Authenticate(UserData user) {
         SQLiteDatabase db = DBHelper.getReadableDatabase();
         Cursor cursor = db.query(DATABASE_TABLE,// Selecting Table
-                new String[]{KEY_ROWID, KEY_USERNAME, KEY_PASSWORD, SCORE},//Selecting columns want to query
-                KEY_USERNAME + "=?",
+                new String[]{KEY_ROWID, KEY_EMAIL, KEY_PASSWORD, SCORE},//Selecting columns want to query
+                KEY_EMAIL + "=?",
                 new String[]{user.email},//Where clause
                 null, null, null);
 
