@@ -83,7 +83,7 @@
         android:textColor="#fff"
         android:padding="8dp"
         android:layout_marginBottom="24dp"
-        android:id="@+id/quit"/>
+        android:id="@+id/quit_button"/>
 
 
 </LinearLayout>

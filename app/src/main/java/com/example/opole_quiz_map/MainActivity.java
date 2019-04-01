@@ -9,6 +9,10 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.MenuItem;
 
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
@@ -32,6 +36,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private PermissionsManager permissionsManager;
     private MapboxMap mapboxMap;
     private MapView mapView;
+    private String mActivityTitle;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private NavigationView navigationView;
+
     UserData userData = UserData.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +67,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 });
             }
         });
+        drawerLayout = (DrawerLayout)findViewById(R.id.activity_main);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.Open, R.string.Close);
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        navigationView = (NavigationView)findViewById(R.id.navi_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    if (item.getItemId() == R.id.account) {
+                        Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();
+                    } else if (item.getItemId() == R.id.settings) {
+                        Toast.makeText(MainActivity.this, "Settings",Toast.LENGTH_SHORT).show();
+                    }else if (item.getItemId() == R.id.usercard) {
+                        Toast.makeText(MainActivity.this, "Your card",Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+            }
+        });
+
         Toast.makeText(this, userData.email + " " + userData.score , Toast.LENGTH_LONG).show();
     }
 
@@ -90,7 +122,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        if(actionBarDrawerToggle.onOptionsItemSelected(item))
+            return true;
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
     @SuppressWarnings( {"MissingPermission"})
