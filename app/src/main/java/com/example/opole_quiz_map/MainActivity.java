@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.Toast;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +30,7 @@ import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.location.modes.RenderMode;
 
+import java.security.PublicKey;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, PermissionsListener, MapboxMap.OnMapClickListener{
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private PermissionsManager permissionsManager;
     private MapboxMap mapboxMap;
     private MapView mapView;
+    private Menu menu;
+    private MenuItem menu_name;
+    private MenuItem menu_score;
     private String mActivityTitle;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -75,22 +80,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        navigationView = (NavigationView)findViewById(R.id.navi_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    if (item.getItemId() == R.id.account) {
-                        Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();
-                    } else if (item.getItemId() == R.id.settings) {
-                        Toast.makeText(MainActivity.this, "Settings",Toast.LENGTH_SHORT).show();
-                    }else if (item.getItemId() == R.id.usercard) {
-                        Toast.makeText(MainActivity.this, "Your card",Toast.LENGTH_SHORT).show();
-                    }
-                    return true;
-            }
-        });
+
         Integer score = userData.getSumScore();
         Toast.makeText(this, userData.email + " " + score , Toast.LENGTH_LONG).show();
+
+        navigationView = (NavigationView)findViewById(R.id.navi_view);
+        menu = navigationView.getMenu();
+        menu_name = menu.findItem(R.id.menu_name);
+        menu_score = menu.findItem(R.id.menu_points);
+        refreshMenuPoints(userData.email);
     }
 
     private static final String geoJsonLayerPoints = "opole-map-quiz";
@@ -119,7 +117,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             return true;
      }
 
-
+    public void refreshMenuPoints(String email){
+        Integer score = userData.getSumScore();
+        menu_name.setTitle("Your name : " + email);
+        menu_score.setTitle("Your score : " + score);
+    }
 
 
     @Override
@@ -197,12 +199,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onResume() {
         super.onResume();
         mapView.onResume();
+        refreshMenuPoints(userData.email);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mapView.onPause();
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        mapView.onResume();
+        refreshMenuPoints(userData.email);
     }
 
     @Override

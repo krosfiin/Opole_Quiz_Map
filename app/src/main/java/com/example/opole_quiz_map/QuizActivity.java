@@ -121,7 +121,6 @@ public class QuizActivity extends AppCompatActivity {
                                         updateQuestion();
                                     }else{
                                         mCongratzView.setText("Congratulation your score is " + mScore);
-                                        mPopupWindow.setAnimationStyle(R.style.AppTheme_Dark_Dialog);
                                         mPopupWindow.showAtLocation(mLinearLayout, Gravity.CENTER,0,0);
                                         dbUserAdapter.updateScore(mPointNumber, userData.email, mScore);
                                         userData.setScore(mPointNumber, mScore);
@@ -168,7 +167,6 @@ public class QuizActivity extends AppCompatActivity {
                                         updateQuestion();
                                     }else{
                                         mCongratzView.setText("Congratulation your score is " + mScore);
-                                        mPopupWindow.setAnimationStyle(R.style.AppTheme_Dark_Dialog);
                                         mPopupWindow.showAtLocation(mLinearLayout, Gravity.CENTER,0,0);
                                         dbUserAdapter.updateScore(mPointNumber, userData.email, mScore);
                                         userData.setScore(mPointNumber, mScore);
@@ -213,7 +211,6 @@ public class QuizActivity extends AppCompatActivity {
                                         updateQuestion();
                                     }else{
                                         mCongratzView.setText("Congratulation your score is " + mScore);
-                                        mPopupWindow.setAnimationStyle(R.style.AppTheme_Dark_Dialog);
                                         mPopupWindow.showAtLocation(mLinearLayout, Gravity.CENTER,0,0);
                                         dbUserAdapter.updateScore(mPointNumber, userData.email, mScore);
                                         userData.setScore(mPointNumber, mScore);
