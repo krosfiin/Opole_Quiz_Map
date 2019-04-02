@@ -134,7 +134,7 @@ public class QuestionQuizHelper extends SQLiteOpenHelper {
         arraylist.add(new QuestionQuiz("W którym roku powstał cmentarz?", "1922", "1822", "1844", "1822", markerName));
         arraylist.add(new QuestionQuiz("Na terenie jakiej wsi został założony cmentarz?", "Wójtowej Wsi", "Wsi Pod Opolskiej", "Nowej Wsi Królewskiej", "Nowej Wsi Królewskiej", markerName));
         arraylist.add(new QuestionQuiz("W którym roku odbył się ostatni pogrzeb na cmentarzu?", "1940", "1945", "1922", "1940", markerName));
-        arraylist.add(new QuestionQuiz("W którym roku Fundacja Ochrony Dziedzictwa Żydownkiego zrobiła prace pożądkowe?", "2004", "1995", "2005", "2005", markerName));
+        arraylist.add(new QuestionQuiz("W którym roku Fundacja Ochrony Dziedzictwa Żydownkiego zrobiła prace porządkowe?", "2004", "1995", "2005", "2005", markerName));
         arraylist.add(new QuestionQuiz("Ile nagrobków zachowało się na cmentarzu?", "ok 150", "ok 200", "ok 175", "ok 150", markerName));
         markerName = "Wyspa Bolko";
         arraylist.add(new QuestionQuiz("Na jakiej rzece znajduje się wypsa?", "Na Wiśle ", "Na Odrze", "Na Dunajcu ", "Na Odrze", markerName));

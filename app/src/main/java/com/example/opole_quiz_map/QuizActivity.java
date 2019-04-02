@@ -50,6 +50,7 @@ public class QuizActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         mLinearLayout = (LinearLayout) findViewById(R.id.activity_quiz);
         String name = getIntent().getStringExtra("Name");
+        setTitle("Questions for : " + name);
         mScoreView = (TextView) findViewById(R.id.score);
         mQuestionView = (TextView) findViewById(R.id.question);
         mButtonChoice1 = (Button) findViewById(R.id.choice1);

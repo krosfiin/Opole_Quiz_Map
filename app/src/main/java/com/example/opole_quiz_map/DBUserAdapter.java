@@ -181,18 +181,24 @@ public class DBUserAdapter
 
     //get writable database
     SQLiteDatabase db = DBHelper.getWritableDatabase();
-    //create content values to insert
-    ContentValues values = new ContentValues();
 
-    //Put username in  @values
-    values.put(KEY_EMAIL, user.email);
+     Cursor cursor = db.query(DATABASE_TABLE, new String[]{KEY_ROWID}, KEY_EMAIL + "=?",new String[]{user.email},null,null,null);
+    if (cursor.getCount()>0){
+        return null;
+        }else {
+        //create content values to insert
+        ContentValues values = new ContentValues();
 
-    //Put password in  @values
-    values.put(KEY_PASSWORD, user.password);
+        //Put username in  @values
+        values.put(KEY_EMAIL, user.email);
 
-    // insert row
-    long todo_id = db.insert(DATABASE_TABLE, null, values);
+        //Put password in  @values
+        values.put(KEY_PASSWORD, user.password);
+
+        // insert row
+        long todo_id = db.insert(DATABASE_TABLE, null, values);
         return user;
+        }
     }
 
     public UserData Authenticate(UserData user) {
