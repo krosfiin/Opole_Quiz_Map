@@ -89,8 +89,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     return true;
             }
         });
-
-        Toast.makeText(this, userData.email + " " + userData.score , Toast.LENGTH_LONG).show();
+        Integer score = userData.getSumScore();
+        Toast.makeText(this, userData.email + " " + score , Toast.LENGTH_LONG).show();
     }
 
     private static final String geoJsonLayerPoints = "opole-map-quiz";

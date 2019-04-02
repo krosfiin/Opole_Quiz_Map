@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     new android.os.Handler().postDelayed(
                             new Runnable() {
                                 public void run() {
-                                    UserData currentUser = dbUserAdapter.Authenticate(new UserData(null, email, password,0));
+                                    UserData currentUser = dbUserAdapter.Authenticate(new UserData(null, email, password,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
                                     if (currentUser != null) {
                                         userData.setUserData(currentUser);
                                         Snackbar.make(buttonLogIn, "Successfully Logged in!", Snackbar.LENGTH_LONG).show();
