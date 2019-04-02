@@ -7,7 +7,7 @@ public class UserData {
 
     public String id;
     public String email;
-    private String password;
+    public String password;
     private Integer score_1;
     private Integer score_2;
     private Integer score_3;
