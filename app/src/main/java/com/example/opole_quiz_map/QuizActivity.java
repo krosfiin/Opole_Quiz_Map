@@ -121,6 +121,7 @@ public class QuizActivity extends AppCompatActivity {
                                         updateQuestion();
                                     }else{
                                         mCongratzView.setText("Congratulation your score is " + mScore);
+                                        mPopupWindow.setAnimationStyle(R.style.AppTheme_Dark_Dialog);
                                         mPopupWindow.showAtLocation(mLinearLayout, Gravity.CENTER,0,0);
                                         dbUserAdapter.updateScore(mPointNumber, userData.email, mScore);
                                         userData.setScore(mPointNumber, mScore);
@@ -131,7 +132,7 @@ public class QuizActivity extends AppCompatActivity {
                                 }
                             }, 1000);
                 } else {
-                    Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuizActivity.this, "Your score : " + mScore, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -167,6 +168,7 @@ public class QuizActivity extends AppCompatActivity {
                                         updateQuestion();
                                     }else{
                                         mCongratzView.setText("Congratulation your score is " + mScore);
+                                        mPopupWindow.setAnimationStyle(R.style.AppTheme_Dark_Dialog);
                                         mPopupWindow.showAtLocation(mLinearLayout, Gravity.CENTER,0,0);
                                         dbUserAdapter.updateScore(mPointNumber, userData.email, mScore);
                                         userData.setScore(mPointNumber, mScore);
@@ -177,7 +179,7 @@ public class QuizActivity extends AppCompatActivity {
                                 }
                             }, 500);
                 } else {
-                    Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuizActivity.this, "Your score : " + mScore, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -211,6 +213,7 @@ public class QuizActivity extends AppCompatActivity {
                                         updateQuestion();
                                     }else{
                                         mCongratzView.setText("Congratulation your score is " + mScore);
+                                        mPopupWindow.setAnimationStyle(R.style.AppTheme_Dark_Dialog);
                                         mPopupWindow.showAtLocation(mLinearLayout, Gravity.CENTER,0,0);
                                         dbUserAdapter.updateScore(mPointNumber, userData.email, mScore);
                                         userData.setScore(mPointNumber, mScore);
@@ -221,7 +224,7 @@ public class QuizActivity extends AppCompatActivity {
                                 }
                             }, 500);
                 } else {
-                    Toast.makeText(QuizActivity.this, "Twój wynik : " + mScore, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuizActivity.this, "Your score : " + mScore, Toast.LENGTH_LONG).show();
                 }
 
             }

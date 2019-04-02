@@ -72,7 +72,7 @@ public class QuestionQuizHelper extends SQLiteOpenHelper {
         arraylist.add(new QuestionQuiz("Od którego roku most jest oświetlany nocą?", "2013", "2010", "1999", "2010", markerName));
         markerName = "Staw Zamkowy";
         arraylist.add(new QuestionQuiz("Jak nazywa się zabytkowy drewniany dom nad Stawem Zamkowym?", "Domek Drewniany ", "Domek Lodowy", "Domek Stawowy", "Domek Lodowy", markerName));
-        arraylist.add(new QuestionQuiz("W którym roku  odbyły się mistrzostwa Niemiec w jęździe figurowej na Stawie?", "1937", "1944", "1934", "1934", markerName));
+        arraylist.add(new QuestionQuiz("W którym roku  odbyły się mistrzostwa Niemiec w jeździe figurowej na Stawie?", "1937", "1944", "1934", "1934", markerName));
         arraylist.add(new QuestionQuiz("Na co przebudowano Staw?", "Na studnie", "Na parking", "Na fontannę", "Na fontannę", markerName));
         arraylist.add(new QuestionQuiz("Skąd pochodziły materiały do budowy Stawu?", "Z części fosy ", "Z Odry ", "Z murów zamkowych ", "Z części fosy ", markerName));
         arraylist.add(new QuestionQuiz("W którym roku zainstalowana została multimedialna fontanna muzyczna?", "2013", "2014", "2011", "2013", markerName));
@@ -93,7 +93,7 @@ public class QuestionQuizHelper extends SQLiteOpenHelper {
         arraylist.add(new QuestionQuiz("W którym roku wpisano świątynię do rejestru zabytków?", "1953", "1964", "1975", "1964", markerName));
         arraylist.add(new QuestionQuiz("Co umieszczono po obu stronach tabernakulum?", "Krzyże ", "Figury aniołów", "Figury apostołów", "Figury aniołów", markerName));
         arraylist.add(new QuestionQuiz("W którym roku powstał ołtarz główny?", "1773", "1777", "1737", "1773", markerName));
-        arraylist.add(new QuestionQuiz("Gdzie powstałą scena ukrzyżowania znajdująca się w centrum katedry?", "W Monachium", "W Watykanie", "W Paryżu", "W Monachium", markerName));
+        arraylist.add(new QuestionQuiz("Gdzie powstała scena ukrzyżowania znajdująca się w centrum katedry?", "W Monachium", "W Watykanie", "W Paryżu", "W Monachium", markerName));
         markerName = "Kościół Świętej Trójcy i Klasztor";
         arraylist.add(new QuestionQuiz("Do jakiej parafi należy kościół?", "Parafi Matki Boskiej Opolskiej", "Parafi Podwyższenia Krzyża Świętego", "Parafi Wywyższenia Jezusa", "Parafi Podwyższenia Krzyża Świętego", markerName));
         arraylist.add(new QuestionQuiz("W którym roku został wpisany do rejestru zabytków?", "1964", "1977", "1965", "1964", markerName));
