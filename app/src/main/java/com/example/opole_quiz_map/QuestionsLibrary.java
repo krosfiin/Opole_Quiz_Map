@@ -27,7 +27,7 @@ public class QuestionsLibrary {
                 "Most Groszowy",
                 "Kościół Świętej Trójcy i Klasztor",
                 "Park Nadodrzański",
-                "Plac daszyńskiego"
+                "Plac Daszyńskiego"
         };
 
         public Integer getPoint(String name){

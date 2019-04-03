@@ -58,7 +58,7 @@ public class QuestionQuizHelper extends SQLiteOpenHelper {
 
     void allQuestion() {
         ArrayList<QuestionQuiz> arraylist = new ArrayList<>();
-        String markerName = "Plac daszyńskiego";
+        String markerName = "Plac Daszyńskiego";
         arraylist.add(new QuestionQuiz("Jak nazywana jest fontanna na Placu Ignacego Daszyńskiego?", "Opolska Caryca", "Opolska Ceres", "Wielka fontanna", "Opolska Ceres", markerName));
         arraylist.add(new QuestionQuiz("Co miało sie kiedyś znajdować na miejscu fontanny?", "Pompa Wodna", "Obora", "Studnia", "Studnia", markerName));
         arraylist.add(new QuestionQuiz("Kiedy ukończono budowę fontanny?", "1907", "1909", "1986", "1907", markerName));
