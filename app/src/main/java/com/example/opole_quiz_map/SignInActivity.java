@@ -103,7 +103,11 @@ public class SignInActivity extends AppCompatActivity implements LoaderCallbacks
                     focusView = mNameView;
                     cancel = true;
                 }
-
+                if (TextUtils.isEmpty(name)) {
+                    mNameView.setError(getString(R.string.error_field_required));
+                    focusView = mNameView;
+                    cancel = true;
+                }
                 // Check for a valid email address.
                 if (TextUtils.isEmpty(email)) {
                     mEmailView.setError(getString(R.string.error_field_required));
@@ -117,6 +121,8 @@ public class SignInActivity extends AppCompatActivity implements LoaderCallbacks
 
                 if (cancel) {
                     focusView.requestFocus();
+                    buttonSignIn.setEnabled(true);
+                    progressDialog.dismiss();
                 } else {
                     new android.os.Handler().postDelayed(
                             new Runnable() {

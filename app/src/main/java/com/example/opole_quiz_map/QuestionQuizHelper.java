@@ -134,7 +134,7 @@ public class QuestionQuizHelper extends SQLiteOpenHelper {
         arraylist.add(new QuestionQuiz("W którym roku powstał cmentarz?", "1922", "1822", "1844", "1822", markerName));
         arraylist.add(new QuestionQuiz("Na terenie jakiej wsi został założony cmentarz?", "Wójtowej Wsi", "Wsi Pod Opolskiej", "Nowej Wsi Królewskiej", "Nowej Wsi Królewskiej", markerName));
         arraylist.add(new QuestionQuiz("W którym roku odbył się ostatni pogrzeb na cmentarzu?", "1940", "1945", "1922", "1940", markerName));
-        arraylist.add(new QuestionQuiz("W którym roku Fundacja Ochrony Dziedzictwa Żydownkiego zrobiła prace porządkowe?", "2004", "1995", "2005", "2005", markerName));
+        arraylist.add(new QuestionQuiz("W którym roku Fundacja Ochrony Dziedzictwa Żydowskiego zrobiła prace porządkowe?", "2004", "1995", "2005", "2005", markerName));
         arraylist.add(new QuestionQuiz("Ile nagrobków zachowało się na cmentarzu?", "ok 150", "ok 200", "ok 175", "ok 150", markerName));
         markerName = "Wyspa Bolko";
         arraylist.add(new QuestionQuiz("Na jakiej rzece znajduje się wypsa?", "Na Wiśle ", "Na Odrze", "Na Dunajcu ", "Na Odrze", markerName));
@@ -159,7 +159,7 @@ public class QuestionQuizHelper extends SQLiteOpenHelper {
         arraylist.add(new QuestionQuiz("Jak nazywa się statek wycieczkowy?", "Oderka", "Opolanin", "Duma Opola", "Opolanin", markerName));
         arraylist.add(new QuestionQuiz("Jaką powierzchnię zajmuje park?", "6 ha", "10 ha", "5 ha", "6 ha", markerName));
         arraylist.add(new QuestionQuiz("W którym roku powstał park?", "ok 1800", "ok 1900", "ok 1700", "ok 1800", markerName));
-        arraylist.add(new QuestionQuiz("Jaki obwód pnia posiada dąb szypułkowy będący ponikiem przyrody?", "399 cm", "465 cm", "432 cm", "432 cm", markerName));
+        arraylist.add(new QuestionQuiz("Jaki obwód pnia posiada dąb szypułkowy będący pomnikiem przyrody?", "399 cm", "465 cm", "432 cm", "432 cm", markerName));
         markerName = "Filharmonia Opolska";
         arraylist.add(new QuestionQuiz("Czyjego imienia jest Filcharmonia Opolska?", "Józefa Stalina ", "Adama Mickiewicza ", "Józefa Elsnera", "Józefa Elsnera", markerName));
         arraylist.add(new QuestionQuiz("W którym roku założono Orkiestrę Symfoniczną Filharmoni Opolskiej?", "1968", "1952", "1956", "1952", markerName));

@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/colorAccent">
+    android:background="@color/primary_darker">
     <TextView
         android:id="@+id/dialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dialog Title"
+        android:text="Change name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
