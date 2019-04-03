@@ -14,6 +14,7 @@ public class DBUserAdapter
     public static final String KEY_ROWID = "_id";
     public static final String KEY_EMAIL= "email";
     public static final String KEY_PASSWORD = "password";
+    public static final String KEY_NAME = "name";
     private static final String TAG = "DBAdapter";
     private static final String SCORE_1 = "score_1";
     private static final String SCORE_2 = "score_2";
@@ -43,6 +44,7 @@ public class DBUserAdapter
             "create table users (_id integer primary key autoincrement, "
                     + "email text not null, "
                     + "password text not null,"
+                    + "name text ,"
                     + "score_1 int DEFAULT 0,"
                     + "score_2 int DEFAULT 0,"
                     + "score_3 int DEFAULT 0,"
@@ -172,8 +174,6 @@ public class DBUserAdapter
                 break;
         }
         String[] whereArgs= {name};
-        Log.d("Values",values.toString());
-        Log.d("PointNumber",score_number.toString());
         int count = db.update(DATABASE_TABLE, values, KEY_EMAIL+" = ?",whereArgs );
     }
 
@@ -181,8 +181,13 @@ public class DBUserAdapter
 
     //get writable database
     SQLiteDatabase db = DBHelper.getWritableDatabase();
-
-     Cursor cursor = db.query(DATABASE_TABLE, new String[]{KEY_ROWID}, KEY_EMAIL + "=?",new String[]{user.email},null,null,null);
+        String whereClause = KEY_EMAIL + " =? OR " + KEY_NAME + " =?";
+        String[] whereArgs = new String[] {
+                user.email,
+                user.name
+        };
+     Cursor cursor = db.query(DATABASE_TABLE, new String[]{KEY_ROWID}, whereClause, whereArgs,null,null,null);
+     Log.d("QUERYNAME", cursor.toString());
     if (cursor.getCount()>0){
         return null;
         }else {
@@ -192,6 +197,7 @@ public class DBUserAdapter
         //Put username in  @values
         values.put(KEY_EMAIL, user.email);
 
+        values.put(KEY_NAME, user.name);
         //Put password in  @values
         values.put(KEY_PASSWORD, user.password);
 
@@ -204,7 +210,7 @@ public class DBUserAdapter
     public UserData Authenticate(UserData user) {
         SQLiteDatabase db = DBHelper.getReadableDatabase();
         Cursor cursor = db.query(DATABASE_TABLE,// Selecting Table
-                new String[]{KEY_ROWID, KEY_EMAIL, KEY_PASSWORD, SCORE_1, SCORE_2, SCORE_3, SCORE_4, SCORE_5, SCORE_6, SCORE_7, SCORE_8, SCORE_9, SCORE_10, SCORE_11, SCORE_12, SCORE_13, SCORE_14, SCORE_15, SCORE_16, SCORE_17, SCORE_18, SCORE_19},//Selecting columns want to query
+                new String[]{KEY_ROWID, KEY_EMAIL, KEY_PASSWORD, KEY_NAME, SCORE_1, SCORE_2, SCORE_3, SCORE_4, SCORE_5, SCORE_6, SCORE_7, SCORE_8, SCORE_9, SCORE_10, SCORE_11, SCORE_12, SCORE_13, SCORE_14, SCORE_15, SCORE_16, SCORE_17, SCORE_18, SCORE_19},//Selecting columns want to query
                 KEY_EMAIL + "=?",
                 new String[]{user.email},//Where clause
                 null, null, null);
@@ -214,7 +220,7 @@ public class DBUserAdapter
             UserData user1 = new UserData(  cursor.getString(0),
                                             cursor.getString(1),
                                             cursor.getString(2),
-                                            cursor.getInt(3),
+                                            cursor.getString(3),
                                             cursor.getInt(4),
                                             cursor.getInt(5),
                                             cursor.getInt(6),
@@ -232,7 +238,8 @@ public class DBUserAdapter
                                             cursor.getInt(18),
                                             cursor.getInt(19),
                                             cursor.getInt(20),
-                                            cursor.getInt(21));
+                                            cursor.getInt(21),
+                                            cursor.getInt(22));
 
             //Match both passwords check they are same or not
             if (user.password.equalsIgnoreCase(user1.password)) {
@@ -242,6 +249,14 @@ public class DBUserAdapter
 
         //if user password does not matches or there is no record with that email then return @false
         return null;
+    }
+
+    public void updateName(String email,String name){
+        SQLiteDatabase db = DBHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+                values.put(KEY_NAME, name);
+        String[] whereArgs= {email};
+        int count = db.update(DATABASE_TABLE, values, KEY_EMAIL+" = ?",whereArgs );
     }
 
 }

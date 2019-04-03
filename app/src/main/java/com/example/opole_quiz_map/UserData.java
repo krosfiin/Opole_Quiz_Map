@@ -8,6 +8,7 @@ public class UserData {
     public String id;
     public String email;
     public String password;
+    public String name;
     private Integer score_1;
     private Integer score_2;
     private Integer score_3;
@@ -32,7 +33,7 @@ public class UserData {
 
     }
 
-    public UserData(String id, String email, String password, Integer score_1, Integer score_2, Integer score_3, Integer score_4, Integer score_5, Integer score_6, Integer score_7, Integer score_8, Integer score_9
+    public UserData(String id, String email, String password, String name, Integer score_1, Integer score_2, Integer score_3, Integer score_4, Integer score_5, Integer score_6, Integer score_7, Integer score_8, Integer score_9
             , Integer score_10, Integer score_11, Integer score_12, Integer score_13, Integer score_14, Integer score_15, Integer score_16, Integer score_17, Integer score_18, Integer score_19) {
         this.id = id;
         this.score_1 = score_1;
@@ -56,6 +57,7 @@ public class UserData {
         this.score_19 = score_19;
         this.email = email;
         this.password = password;
+        this.name = name;
     }
 
     public void setUserData(UserData user) {
@@ -81,9 +83,18 @@ public class UserData {
         this.score_19 = user.score_19;
         this.email = user.email;
         this.password = user.password;
+        this.name = user.name;
     }
     public UserData getUserData() {
         return this;
+    }
+
+    public String getUserName(){
+        return this.name;
+    }
+
+    public void setUserName(String name){
+        this.name = name;
     }
 
     public Integer getSumScore() {

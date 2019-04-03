@@ -45,6 +45,7 @@ public class SignInActivity extends AppCompatActivity implements LoaderCallbacks
     private static final int REQUEST_SIGNUP = 0;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mNameView;
     private TextView _loginLink;
     private Button buttonSignIn;
     private DBUserAdapter dbUserAdapter;
@@ -55,6 +56,7 @@ public class SignInActivity extends AppCompatActivity implements LoaderCallbacks
         setContentView(R.layout.activity_sign_in);
         // Set up the login form.
         mEmailView = findViewById(R.id.input_email);
+        mNameView = findViewById(R.id.input_name);
         populateAutoComplete();
         dbUserAdapter = new DBUserAdapter(this);
         mPasswordView = findViewById(R.id.input_password);
@@ -84,7 +86,7 @@ public class SignInActivity extends AppCompatActivity implements LoaderCallbacks
                 // Store values at the time of the login attempt.
                 final String email = mEmailView.getText().toString();
                 final String password = mPasswordView.getText().toString();
-
+                final String name = mNameView.getText().toString();
                 boolean cancel = false;
                 View focusView = null;
 
@@ -92,6 +94,13 @@ public class SignInActivity extends AppCompatActivity implements LoaderCallbacks
                 if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
                     mPasswordView.setError(getString(R.string.error_invalid_password));
                     focusView = mPasswordView;
+                    cancel = true;
+                }
+
+                // Check for a valid name, if the user entered one.
+                if (!TextUtils.isEmpty(name) && !isNameValid(name)) {
+                    mNameView.setError(getString(R.string.error_invalid_name));
+                    focusView = mNameView;
                     cancel = true;
                 }
 
@@ -112,7 +121,7 @@ public class SignInActivity extends AppCompatActivity implements LoaderCallbacks
                     new android.os.Handler().postDelayed(
                             new Runnable() {
                                 public void run() {
-                                    UserData currentUser = dbUserAdapter.addUser(new UserData(null, email, password, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+                                    UserData currentUser = dbUserAdapter.addUser(new UserData(null, email, password, name, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
 
                                     //Check Authentication is successful or not
                                     if (currentUser != null) {
@@ -191,6 +200,11 @@ public class SignInActivity extends AppCompatActivity implements LoaderCallbacks
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
+    }
+
+    private boolean isNameValid(String name) {
+        //TODO: Replace this with your own logic
+        return name.length() > 2;
     }
 
     private boolean isPasswordValid(String password) {

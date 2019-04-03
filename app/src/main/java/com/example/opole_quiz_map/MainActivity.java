@@ -1,6 +1,8 @@
 package com.example.opole_quiz_map;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +10,18 @@ import android.os.Bundle;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.Toast;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+import android.view.View;
+import android.support.v7.app.AlertDialog;
+import android.widget.EditText;
+import android.content.DialogInterface;
 
 import com.mapbox.geojson.Feature;
 import com.mapbox.geojson.Point;
@@ -40,18 +48,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private MapView mapView;
     private Menu menu;
     private MenuItem menu_name;
+    private MenuItem menu_logout;
     private MenuItem menu_score;
     private String mActivityTitle;
+    private DBUserAdapter dbUserAdapter;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
-
+    final Context context = this;
     UserData userData = UserData.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
         setContentView(R.layout.activity_main);
+        dbUserAdapter = new DBUserAdapter(this);
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -82,13 +93,60 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         Integer score = userData.getSumScore();
-        Toast.makeText(this, userData.email + " " + score , Toast.LENGTH_LONG).show();
+        Toast.makeText(this, userData.name + " " + score , Toast.LENGTH_LONG).show();
 
         navigationView = (NavigationView)findViewById(R.id.navi_view);
         menu = navigationView.getMenu();
         menu_name = menu.findItem(R.id.menu_name);
+        menu_name.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                LayoutInflater layoutInflaterAndroid = LayoutInflater.from(context);
+                View mView = layoutInflaterAndroid.inflate(R.layout.user_input_name, null);
+                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(context);
+                alertDialogBuilderUserInput.setView(mView);
+                final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputName);
+                userInputDialogEditText.setText(userData.name);
+                alertDialogBuilderUserInput
+                        .setCancelable(false)
+                        .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                refreshMenuPoints(userInputDialogEditText.getText().toString());
+                                userData.setUserName(userInputDialogEditText.getText().toString());
+                                dbUserAdapter.updateName(userData.email, userInputDialogEditText.getText().toString());
+                                Toast.makeText(context, "Your new name is : " + userInputDialogEditText.getText().toString() , Toast.LENGTH_LONG).show();
+                            }
+                        })
+
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        dialogBox.cancel();
+                                    }
+                                });
+
+                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                alertDialogAndroid.show();
+                Button nbutton = alertDialogAndroid.getButton(DialogInterface.BUTTON_NEGATIVE);
+                nbutton.setTextColor(Color.RED);
+                Button pbutton = alertDialogAndroid.getButton(DialogInterface.BUTTON_POSITIVE);
+                pbutton.setTextColor(Color.parseColor("#21890c"));
+                return true;
+            }
+        });
+        menu_logout = menu.findItem(R.id.action_logout);
         menu_score = menu.findItem(R.id.menu_points);
-        refreshMenuPoints(userData.email);
+        menu_logout.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                userData.setUserData(new UserData("","","","",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0));
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(login);
+                finish();
+                return true;
+            }});
+
+            refreshMenuPoints(userData.name);
     }
 
     private static final String geoJsonLayerPoints = "opole-map-quiz";
@@ -117,9 +175,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             return true;
      }
 
-    public void refreshMenuPoints(String email){
+    public void refreshMenuPoints(String name){
         Integer score = userData.getSumScore();
-        menu_name.setTitle("Your name : " + email);
+        menu_name.setTitle("Your name : " + name);
         menu_score.setTitle("Your score : " + score);
     }
 
@@ -199,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onResume() {
         super.onResume();
         mapView.onResume();
-        refreshMenuPoints(userData.email);
+        refreshMenuPoints(userData.name);
     }
 
     @Override
@@ -212,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onRestart() {
         super.onRestart();
         mapView.onResume();
-        refreshMenuPoints(userData.email);
+        refreshMenuPoints(userData.name);
     }
 
     @Override

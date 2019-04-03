@@ -20,6 +20,19 @@
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <EditText android:id="@+id/input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="Nazwa"
+                android:hint="Name"/>
+        </android.support.design.widget.TextInputLayout>
+
         <!-- Email Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -29,7 +42,7 @@
             <AutoCompleteTextView android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:text="test@test.pl"
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
@@ -47,6 +60,8 @@
                 android:text="test"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
+
+
 
         <!-- Signin Button -->
         <Button
