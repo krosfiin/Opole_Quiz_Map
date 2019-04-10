@@ -37,7 +37,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         android:text="Which thing is alive?"
         android:textSize="18sp"
         android:padding="8dp"
