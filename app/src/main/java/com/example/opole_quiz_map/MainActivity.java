@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -53,8 +55,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String mActivityTitle;
     private DBUserAdapter dbUserAdapter;
     private DrawerLayout drawerLayout;
+    private View header;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
+    private ImageView progressIcon;
+
     final Context context = this;
     UserData userData = UserData.getInstance();
     @Override
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 });
             }
         });
-        drawerLayout = (DrawerLayout)findViewById(R.id.activity_main);
+        drawerLayout = findViewById(R.id.activity_main);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.Open, R.string.Close);
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -93,9 +98,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         Integer score = userData.getSumScore();
-        Toast.makeText(this, userData.name + " " + score , Toast.LENGTH_LONG).show();
 
-        navigationView = (NavigationView)findViewById(R.id.navi_view);
+        navigationView = findViewById(R.id.navi_view);
+        header = navigationView.getHeaderView(0);
+        progressIcon = header.findViewById(R.id.progress_icon);
+
         menu = navigationView.getMenu();
         menu_name = menu.findItem(R.id.menu_name);
         menu_name.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -179,6 +186,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Integer score = userData.getSumScore();
         menu_name.setTitle("Your name : " + name);
         menu_score.setTitle("Your score : " + score);
+        if (score <= 30){
+            progressIcon.setBackground(getDrawable(R.mipmap.bronz_icon));
+        } else if(score <= 60) {
+            progressIcon.setBackground(getDrawable(R.mipmap.silver_icon));
+        } else if(score < 100){
+            progressIcon.setBackground(getDrawable(R.mipmap.gold_icon));
+        }
     }
 
 
